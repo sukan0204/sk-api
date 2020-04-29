@@ -10,6 +10,18 @@ var config = {
 
 const YAML = require("yamljs");
 
+//Set up mongoose connection
+var mongoose = require("mongoose");
+var mongoDB = "mongodb+srv://admin:0204@cluster0-cruyt.azure.mongodb.net/test";
+mongoose.connect(mongoDB, { useNewUrlParser: true });
+var db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+// routes
+var communityRouter = require("./api/routes/communityRouter");
+app.use("/community", communityRouter);
+
 var swaggerUi = require("swagger-ui-express"),
   swaggerDocument = YAML.load("./api/swagger/swagger.yaml");
 
